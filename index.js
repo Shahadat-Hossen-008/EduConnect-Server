@@ -24,6 +24,10 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     const collegeCollections = client.db("CollegeManagement").collection("CollegeBooking");
+    app.get("/college-limit-list", async(req, res)=>{
+      const result = await collegeCollections.find().limit(3).toArray();
+      res.send(result);
+    })
     app.get("/college-list",async (req, res) => {
       const result = await collegeCollections.find().toArray();
       res.send(result);
