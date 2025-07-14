@@ -35,6 +35,15 @@ async function run() {
       const result = await userCollection.insertOne(user)
      res.send(result);
     })
+    app.get("/user-collection/:email", async(req, res)=>{
+      const email = req.params.email;
+    const user = await userCollection.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    res.send(user);
+    })
     app.get("/college-limit-list", async(req, res)=>{
       const result = await collegeCollections.find().limit(3).toArray();
       res.send(result);
